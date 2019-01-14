@@ -16,17 +16,23 @@
 <form method='POST' action="{{ url_for('create') }}">
 <input type="text" placeholder="Test name" name="testname">
 <input type="submit" value="+create">
-<form>
+
 <hr>
 
+<h2>Tests:</h2>
 <table>
+{% for item in tests %}
 <tr>
-<td>TESTNAME</td>
+<form>
+<td><input type='text' value='{{item[0]}}' name='testname' readonly></td>
 <td><input type="submit" value="#edit" formmethod="post" formaction="{{ url_for('edit') }}"></td>
 <td><input type="submit" value="-delete" formmethod="post" formaction="{{ url_for('delete') }}"></td>
-</tr>
-</table>
 </form>
+</tr>
+{% endfor %}
+</table>
+
+
 {% endif %}
 
 </body>
