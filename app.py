@@ -136,10 +136,24 @@ def nextq():
     if qtype=='isRadio':
         qu = 'you chosed '+request.form['corradioanswer']+' in '+qtype+question
         print(qu)
+        req = list(dict(request.form).items())
+        for item in req:
+            if item[0][:-1] in 'radioanswer':
+                if item[0][-1:]==request.form['corradioanswer']:
+                    DBItem('Answer').Create((item[1][0],1,str(testname)+'.'+str(curQID)),False)
+                else:
+                    DBItem('Answer').Create((item[1][0],0,str(testname)+'.'+str(curQID)),False)
         
     if qtype=='isCheck':
         qu = 'you chosed '+str(request.form.getlist('corcheckanswer'))+' in '+qtype+question
         print(qu) 
+        req = list(dict(request.form).items())
+        for item in req:
+            if item[0][:-1] in 'checkanswer':
+                if item[0][-1:] in request.form.getlist('corcheckanswer'):
+                    DBItem('Answer').Create((item[1][0],1,str(testname)+'.'+str(curQID)),False)
+                else:
+                    DBItem('Answer').Create((item[1][0],0,str(testname)+'.'+str(curQID)),False)
     return render_template("create.html", testname=testname)
 
 @app.route("/finishq", methods=['POST'])

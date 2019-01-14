@@ -28,10 +28,10 @@ Answer:
 <button type="button" onclick="AddAnswer('Radio',1)">+</button>
 <button type="button" onclick="DelAnswer('Radio',1)">-</button><br>
 <div id='r1'>Answer:
-<input type="text" name="radioanswer" id='ra1'>
+<input type="text" name="radioanswer1" id='ra1'>
 <input type="radio" name="corradioanswer" id='cra1' value='1'><br></div>
 <div id='r2'>Answer:
-<input type="text" name="radioanswer" id='ra2'>
+<input type="text" name="radioanswer2" id='ra2'>
 <input type="radio" name="corradioanswer" id='cra2' value='2'><br></div>
 
 </div>
@@ -41,10 +41,10 @@ Answer:
 <button type="button" onclick="AddAnswer('Check',0)">+</button>
 <button type="button" onclick="DelAnswer('Check',0)">-</button><br>
 <div id='c1'>Answer:
-<input type="text" name="checkanswer" id='ca1'>
+<input type="text" name="checkanswer1" id='ca1'>
 <input type="checkbox" name="corcheckanswer" id='cca1' value='1'><br></div>
 <div id='c2'>Answer:
-<input type="text" name="checkanswer" id='ca2'>
+<input type="text" name="checkanswer2" id='ca2'>
 <input type="checkbox" name="corcheckanswer" id='cca2' value='2'><br></div>
 </div>
 
@@ -89,8 +89,8 @@ function AddAnswer(place, type) {
 	var end = document.getElementById(place);
 	//var count = (end.childElementCount-2)/3+1;
 	var count = end.childElementCount+1-3;
-	var q0 = '<div id="c'+count+'">Answer:	<input type="text" name="checkanswer" id="ca'+count+'">	<input type="checkbox" name="corcheckanswer" id="cca'+count+'" value='+count+'><br></div>';
-	var q1 = '<div id="r'+count+'">Answer:	<input type="text" name="radioanswer" id="ra'+count+'">	<input type="radio" name="corradioanswer" id="cra'+count+'" value='+count+'><br></div>';
+	var q0 = '<div id="c'+count+'">Answer:	<input type="text" name="checkanswer'+count+'" id="ca'+count+'">	<input type="checkbox" name="corcheckanswer" id="cca'+count+'" value='+count+'><br></div>';
+	var q1 = '<div id="r'+count+'">Answer:	<input type="text" name="radioanswer'+count+'" id="ra'+count+'">	<input type="radio" name="corradioanswer" id="cra'+count+'" value='+count+'><br></div>';
 	if(type==0){
 		end.insertAdjacentHTML("beforeEnd", q0);	
 	}
