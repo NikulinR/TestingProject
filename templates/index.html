@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>Choose</title>
+</head>
+<body>
+<form action="{{ url_for('signout') }}" method = "POST">
+<input type = "submit" value= "Exit">
+</form>
+<h1>Hello, {{group}} {{user}}!</h1>
+
+{% if group=="student" %}
+
+{% endif %}
+
+{% if group=="teacher" %}
+<form method='POST' action="{{ url_for('create') }}">
+<input type="text" placeholder="Test name" name="testname">
+<input type="submit" value="+create">
+<form>
+<hr>
+
+<table>
+<tr>
+<td>TESTNAME</td>
+<td><input type="submit" value="#edit" formmethod="post" formaction="{{ url_for('edit') }}"></td>
+<td><input type="submit" value="-delete" formmethod="post" formaction="{{ url_for('delete') }}"></td>
+</tr>
+</table>
+</form>
+{% endif %}
+
+</body>
+</html>

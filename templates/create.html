@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>Creating</title>
+</head>
+<body>
+<h1>Creating {{testname}}...</h1>
+<input type="radio" name="type" value="isText" checked onclick="Selected(this)"> Simple text
+<input type="radio" name="type" value="isRadio" onclick="Selected(this)"> One correct
+<input type="radio" name="type" value="isCheck" onclick="Selected(this)"> Many correct
+<table>
+<tr>
+<td>Question:</td>
+<td><input type="text" name="qname"></td>
+</tr>
+</table>
+<hr>
+
+<!--If text statement-->
+<div id = "Text" style="display: block;">
+Answer:
+<input type="text" name="textanswer" id='ta'>
+</div>
+
+<!--If radio statement-->
+<div id = "Radio" style="display: none;"><tr>
+<button type="button" onclick="AddAnswer('Radio',1)">+</button>
+<button type="button" onclick="DelAnswer('Radio',1)">-</button><br>
+<div id='r1'>Answer:
+<input type="text" name="radioanswer" id='ra1'>
+<input type="radio" name="corradioanswer" id='cra1'><br></div>
+<div id='r2'>Answer:
+<input type="text" name="radioanswer" id='ra2'>
+<input type="radio" name="corradioanswer" id='cra2'><br></div>
+
+</div>
+
+<!--If check statement-->
+<div id = "Check" style="display: none;">
+<button type="button" onclick="AddAnswer('Check',0)">+</button>
+<button type="button" onclick="DelAnswer('Check',0)">-</button><br>
+<div id='c1'>Answer:
+<input type="text" name="checkanswer" id='ca1'>
+<input type="checkbox" name="corcheckanswer" id='cca1'><br></div>
+<div id='c2'>Answer:
+<input type="text" name="checkanswer" id='ca2'>
+<input type="checkbox" name="corcheckanswer" id='cca2'><br></div>
+</div>
+
+<input type="submit" value="Next">
+<input type="submit" value="Finish">
+</form>
+
+<script>
+function Selected(a) {
+  var label = a.value;
+    if (label=="isText") {
+       document.getElementById("Text").style.display='block';
+	   document.getElementById("Check").style.display='none';
+	   document.getElementById("Radio").style.display='none';
+   } else if(label=="isCheck"){
+       document.getElementById("Text").style.display='none';
+	   document.getElementById("Check").style.display='block';
+	   document.getElementById("Radio").style.display='none';
+   } else if(label=="isRadio"){
+       document.getElementById("Text").style.display='none';
+	   document.getElementById("Check").style.display='none';
+	   document.getElementById("Radio").style.display='block';
+   } 
+}
+function DelAnswer(place, type) {
+	var end = document.getElementById(place);
+	//var count = (end.childElementCount-2)/3;
+	var count = end.childElementCount-3;
+		if(count>2){
+		if(type==0){
+			var del = document.getElementById('c'+count)
+			del.parentNode.removeChild(del);	
+		}
+		else{
+			var del = document.getElementById('r'+count)
+			del.parentNode.removeChild(del);		
+		}
+	}
+}
+
+function AddAnswer(place, type) {
+	var end = document.getElementById(place);
+	//var count = (end.childElementCount-2)/3+1;
+	var count = end.childElementCount+1-3;
+	var q0 = '<div id="c'+count+'">Answer:	<input type="text" name="checkanswer" id="ca'+count+'">	<input type="checkbox" name="corcheckanswer" id="cca'+count+'"><br></div>';
+	var q1 = '<div id="r'+count+'">Answer:	<input type="text" name="radioanswer" id="ra'+count+'">	<input type="radio" name="corradioanswer" id="cra'+count+'"><br></div>';
+	if(type==0){
+		end.insertAdjacentHTML("beforeEnd", q0);	
+	}
+	else{
+		end.insertAdjacentHTML("beforeEnd", q1);	
+	}
+}
+</script>
+</body>
+</html>

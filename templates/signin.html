@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>Authorization</title>
+</head>
+<body>
+Testing<hr>
+<h1>Sign in</h1>
+<form method="POST" action="{{ url_for('signin') }}">
+<table>
+<tr>
+<td>Login:</td>
+<td><input name = "login" type = "text" placeholder="Login"></td>
+</tr>
+<tr>
+<td>Password:</td>
+<td><input name = "password" type = "password" placeholder="Password"></td>
+</tr>
+</table>
+<input type = "submit" value="Sign in">
+</form>
+{% if repass %}
+<h5>Please check your input</h5>
+{% endif %}
+
+
+
+</body>
+</html>
