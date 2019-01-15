@@ -127,6 +127,10 @@ def nextq():
     question = request.form['qname']
     testname = request.form['testname']
     global curQID
+    if((qtype=='isText' and ('textanswer' not in dict(request.form).keys())) or (qtype=='isRadio' and ('corradioanswer' not in dict(request.form).keys())) or (qtype=='isCheck' and ('corcheckanswer' not in dict(request.form).keys()))):
+        print(['textanswer'] not in dict(request.form).items())
+        print(dict(request.form).items()) 
+        return render_template("create.html", testname=testname)
     curQID+=1
     DBItem('Question').Create((str(testname)+'.'+str(curQID),testname,question,qtype),True)
     if qtype=='isText':
@@ -158,7 +162,42 @@ def nextq():
 
 @app.route("/finishq", methods=['POST'])
 def finishq():
-    return "delete"
+    qtype = request.form['type']
+    question = request.form['qname']
+    testname = request.form['testname']
+    global curQID
+    if((qtype=='isText' and ('textanswer' not in dict(request.form).keys())) or (qtype=='isRadio' and ('corradioanswer' not in dict(request.form).keys())) or (qtype=='isCheck' and ('corcheckanswer' not in dict(request.form).keys()))):
+        print(['textanswer'] not in dict(request.form).items())
+        print(dict(request.form).items()) 
+        return render_template("create.html", testname=testname)
+    curQID+=1
+    DBItem('Question').Create((str(testname)+'.'+str(curQID),testname,question,qtype),True)
+    if qtype=='isText':
+        qu = 'you chosed '+request.form['textanswer']+' in '+qtype+question
+        print(qu)
+        DBItem('Answer').Create((request.form['textanswer'],1,str(testname)+'.'+str(curQID)),False)
+    if qtype=='isRadio':
+        qu = 'you chosed '+request.form['corradioanswer']+' in '+qtype+question
+        print(qu)
+        req = list(dict(request.form).items())
+        for item in req:
+            if item[0][:-1] in 'radioanswer':
+                if item[0][-1:]==request.form['corradioanswer']:
+                    DBItem('Answer').Create((item[1][0],1,str(testname)+'.'+str(curQID)),False)
+                else:
+                    DBItem('Answer').Create((item[1][0],0,str(testname)+'.'+str(curQID)),False)
+        
+    if qtype=='isCheck':
+        qu = 'you chosed '+str(request.form.getlist('corcheckanswer'))+' in '+qtype+question
+        print(qu) 
+        req = list(dict(request.form).items())
+        for item in req:
+            if item[0][:-1] in 'checkanswer':
+                if item[0][-1:] in request.form.getlist('corcheckanswer'):
+                    DBItem('Answer').Create((item[1][0],1,str(testname)+'.'+str(curQID)),False)
+                else:
+                    DBItem('Answer').Create((item[1][0],0,str(testname)+'.'+str(curQID)),False)
+    return main()
 
 if __name__ == '__main__':
   app.run(debug = False)
