@@ -1,6 +1,8 @@
 import sqlite3
 import time
 from flask import Flask, render_template,g, request, redirect, url_for
+from flask import request
+
 
 DATABASE = 'Testing.db'
 app = Flask(__name__)
@@ -65,6 +67,17 @@ class DBItem():
     def Search(self, param, value):
         cur.execute('select * from %s where %s = "%s"'%(self.tablename, param, value))
         return cur.fetchall()
+
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+
+@app.route('/shutdown', methods=['POST'])
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'
 
 @app.route("/")
 def main():
@@ -205,15 +218,26 @@ def start():
     testquestions = DBItem('Question').Search('TestName',testname)
     qnames = list(map(lambda x:x[2], testquestions))
     qnums = list(map(lambda x:x[0], testquestions))
+    qtype = list(map(lambda x:x[3], testquestions))
     testdict = {}
     for i in range(len(qnames)):
-        testdict[qnames[i]] = list(map(lambda x:x[1:3], DBItem('Answer').Search('QuestionId',qnums[i])))
-    
-    
-    
-    
-    
-    return str(testdict)
+        res = list(map(lambda x:x[1], DBItem('Answer').Search('QuestionId',qnums[i])))
+        res = (res,qtype[i],qnums[i])
+        testdict[qnames[i]] = res
+    return render_template('passing.html', testdict = testdict, testname=testname)
+
+@app.route("/handler", methods=['POST'])
+def handler():
+    req = dict(request.form)
+    testname = request.form['testname']
+    reqquestions = list(filter(lambda x: 'user_' in x, req))
+    reqquestionid = list(filter(lambda x: 'qid' in x, req))
+    for item in reqquestionid:
+        questionid = item[4:]
+        print(questionid)
+        qname = DBItem('Question').Search('Number', questionid)[2]
+        answers = req['user_'+str(qname)]
+    return render_template('results.html', req = req)
 
 if __name__ == '__main__':
-  app.run(debug = False)
+  app.run(debug = True)

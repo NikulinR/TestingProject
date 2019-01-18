@@ -2,11 +2,29 @@
 <head><title>Passing</title></head>
 <body>
 <h1>Passing {{testname}}...</h1>
+<form method = 'post' action="{{url_for('handler')}}">
+<input type = 'text' hidden name='testname' value='{{testname}}'>
+{% for question in testdict %}
+<h2>{{question}}</h2>
 
-{% for question in questions %}
-{{question[0]}}
+{% for answer in testdict[question][0]%}
+
+{% if testdict[question][1]=='isText' %}
+<input type='text' name='user_{{question}}'>
+{% endif %}
+{% if testdict[question][1]=='isRadio' %}
+<input type='radio' name='user_{{question}}' value = "{{answer[0]}}">{{answer[0]}}<br>
+{% endif %}
+{% if testdict[question][1]=='isCheck' %}
+<input type='checkbox' name='user_{{question}}' value = "{{answer[0]}}">{{answer[0]}}<br>
+{% endif %}
 
 {% endfor %}
+
+<input type = 'text' hidden name='qid{{question}}' value='{{testdict[question][2]}}'>
+{% endfor %}
+<input type = "submit" value = 'Done'>
+</form>
 
 </body>
 </html>
