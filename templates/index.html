@@ -9,12 +9,22 @@
 <h1>Hello, {{group}} {{user}}!</h1>
 
 {% if group=="student" %}
-
+<h2>Tests:</h2>
+<table>
+{% for item in tests %}
+<tr>
+<form>
+<td><input type='text' value='{{item[0]}}' name='testname' readonly></td>
+<td><input type="submit" value=">Start" formmethod="post" formaction="{{ url_for('start') }}"></td>
+</form>
+</tr>
+{% endfor %}
+</table>
 {% endif %}
 
 {% if group=="teacher" %}
 <form method='POST' action="{{ url_for('create') }}">
-<input type="text" placeholder="Test name" name="testname">
+<input type="text" placeholder="Test name" name="testname" required>
 <input type="submit" value="+create">
 
 <hr>

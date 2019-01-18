@@ -57,9 +57,9 @@ class DBItem():
         print(requestline)
         cur.execute(requestline)
     
-    def Show(self):
+    def Show(self, column):
         #print('select * from '+self.tablename+";")
-        cur.execute('select * from '+self.tablename+";")
+        cur.execute('select %s from %s;'%(column, self.tablename))
         return cur.fetchall()
     
     def Search(self, param, value):
@@ -77,7 +77,7 @@ def main():
             isFirstTry = False
             return render_template("signin.html", repass = False)
     else:
-        tests = DBItem('Test').Show()
+        tests = DBItem('Test').Show('*')
         return render_template("index.html", user = user[0][0], group = user[0][2].lower(), tests=tests)
 
 @app.route("/signin", methods=['POST'])
@@ -198,6 +198,22 @@ def finishq():
                 else:
                     DBItem('Answer').Create((item[1][0],0,str(testname)+'.'+str(curQID)),False)
     return main()
+
+@app.route("/start", methods=['POST'])
+def start():
+    testname = request.form['testname']
+    testquestions = DBItem('Question').Search('TestName',testname)
+    qnames = list(map(lambda x:x[2], testquestions))
+    qnums = list(map(lambda x:x[0], testquestions))
+    testdict = {}
+    for i in range(len(qnames)):
+        testdict[qnames[i]] = list(map(lambda x:x[1:3], DBItem('Answer').Search('QuestionId',qnums[i])))
+    
+    
+    
+    
+    
+    return str(testdict)
 
 if __name__ == '__main__':
   app.run(debug = False)
