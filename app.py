@@ -74,7 +74,7 @@ def shutdown_server():
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
 
-@app.route('/shutdown', methods=['POST'])
+@app.route('/shutdown')
 def shutdown():
     shutdown_server()
     return 'Server shutting down...'
@@ -232,12 +232,35 @@ def handler():
     testname = request.form['testname']
     reqquestions = list(filter(lambda x: 'user_' in x, req))
     reqquestionid = list(filter(lambda x: 'qid' in x, req))
+    anstrue = 0
+    ansfalse = 0
+    
+    res = {}
     for item in reqquestionid:
-        questionid = item[4:]
-        print(questionid)
-        qname = DBItem('Question').Search('Number', questionid)[2]
+        questionid = item[3:]
+        #print(questionid)
+        qname = DBItem('Question').Search('Number', questionid)[0][2]
         answers = req['user_'+str(qname)]
-    return render_template('results.html', req = req)
+        correct = True
+        cur.execute('select Name from Answer where QuestionId="%s" and isTrue=1'%(questionid))
+        que = cur.fetchall()
+        que = list(map(lambda x: x[0], que))
+        print(que)
+        print(len(que))
+        qtrue = 0
+        for answer in answers:
+            if answer not in que :
+                correct = False
+                qtrue-=1
+            else:
+                qtrue+=1
+        
+        if qtrue<0:
+            qtrue = 0
+        anstrue += qtrue/(len(que))    
+        ansfalse += 1 - qtrue/(len(que))
+        res[qname] = (str(tuple(answers)).lstrip('(').rstrip(')').rstrip(','),correct)
+    return render_template('results.html', req = res, grade = anstrue/(anstrue+ansfalse)*100)
 
 if __name__ == '__main__':
-  app.run(debug = True)
+  app.run(debug = False)

@@ -4,6 +4,17 @@
 </head>
 <body>
 <h1>Your results...</h1>
-{{req}}
+{% for key in req %}
+<h2>Question: </h2>{{key}}
+<h3>Your answer, {{req[key][0]}}
+{% if req[key][1]%}
+is true!
+{% endif %}
+{% if not req[key][1]%}
+is false...
+{% endif %}
+</h3>
+{% endfor %}
+<h1>Your accuracy: {{grade}}%</h1>
 </body>
 </html>
