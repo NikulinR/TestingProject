@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>Choose</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/external.css') }}"/></head>
 </head>
 <body>
 <form action="{{ url_for('signout') }}" method = "POST">
@@ -26,7 +27,7 @@
 <form method='POST' action="{{ url_for('create') }}">
 <input type="text" placeholder="Test name" name="testname" required>
 <input type="submit" value="+create">
-
+</form>
 <hr>
 
 <h2>Tests:</h2>

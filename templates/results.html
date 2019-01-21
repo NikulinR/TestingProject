@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>Results</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/external.css') }}"/></head>
 </head>
 <body>
 <h1>Your results...</h1>
@@ -16,5 +17,8 @@ is false...
 </h3>
 {% endfor %}
 <h1>Your accuracy: {{grade}}%</h1>
+<form>
+<input type="submit" value="return" formaction = "/">
+</form>
 </body>
 </html>

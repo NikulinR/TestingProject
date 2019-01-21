@@ -1,0 +1,52 @@
+.wrong-answer{
+	color: red;
+	} 
+.needed-answer{
+	color: blue;
+	} 
+.right-answer{
+	color: green;
+	}
+	
+body{
+	background: #aaeaed;
+	font-family: Georgia;
+	font-size: 16pt;
+	padding: 20px;
+}
+	
+h1{
+	text-align: center;
+	font-style: Italic;
+}
+
+h2{
+	text-align: center;
+}
+
+h4{
+	text-align: center;
+}
+
+
+
+input:hover{
+	border: 2px inset blue;
+	transform: scale(1.1);
+}
+
+
+button:hover{
+	border: 2px inset blue;
+	transform: scale(1.1);
+}
+
+button{
+	position: absolute;
+	left: 50%;
+	margin-left: -20px;
+}
+
+.radio:hover{
+	transform: scale(2);
+}

@@ -240,7 +240,7 @@ def handler():
         questionid = item[3:]
         #print(questionid)
         qname = DBItem('Question').Search('Number', questionid)[0][2]
-        answers = req['user_'+str(qname)]
+        answers = request.form.getlist('user_'+str(qname))
         correct = True
         cur.execute('select Name from Answer where QuestionId="%s" and isTrue=1'%(questionid))
         que = cur.fetchall()
@@ -260,7 +260,9 @@ def handler():
         anstrue += qtrue/(len(que))    
         ansfalse += 1 - qtrue/(len(que))
         res[qname] = (str(tuple(answers)).lstrip('(').rstrip(')').rstrip(','),correct)
-    return render_template('results.html', req = res, grade = anstrue/(anstrue+ansfalse)*100)
+    grade = round(anstrue/(anstrue+ansfalse)*100, 2)
+    DBItem('Result').Create((user[0][0],testname, grade), True)
+    return render_template('results.html', req = res, grade=grade)
 
 if __name__ == '__main__':
-  app.run(debug = False)
+  app.run(debug = True)

@@ -1,5 +1,6 @@
 <html>
-<head><title>Passing</title></head>
+<head><title>Passing</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/external.css') }}"/></head>
 <body>
 <h1>Passing {{testname}}...</h1>
 <form method = 'post' action="{{url_for('handler')}}">
@@ -13,10 +14,10 @@
 <input type='text' name='user_{{question}}'>
 {% endif %}
 {% if testdict[question][1]=='isRadio' %}
-<input type='radio' name='user_{{question}}' value = "{{answer[0]}}">{{answer[0]}}<br>
+<input type='radio' name='user_{{question}}' value = "{{answer}}">{{answer}}<br>
 {% endif %}
 {% if testdict[question][1]=='isCheck' %}
-<input type='checkbox' name='user_{{question}}' value = "{{answer[0]}}">{{answer[0]}}<br>
+<input type='checkbox' name='user_{{question}}' value = "{{answer}}">{{answer}}<br>
 {% endif %}
 
 {% endfor %}
