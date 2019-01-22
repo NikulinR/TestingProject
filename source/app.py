@@ -1,10 +1,11 @@
 import sqlite3
 import time
+import os
 from flask import Flask, render_template,g, request, redirect, url_for
 from flask import request
 
-
-DATABASE = 'Testing.db'
+#PLEASE CHANGE IT
+DATABASE = 'C:/Users/Roman/Documents/Testing_py/source/testing.db'
 app = Flask(__name__)
 db = sqlite3.connect(DATABASE, check_same_thread=False)
 cur = db.cursor()
@@ -265,4 +266,5 @@ def handler():
     return render_template('results.html', req = res, grade=grade)
 
 if __name__ == '__main__':
-  app.run(debug = True)
+    app.static_folder = 'static'
+    app.run(debug = True)

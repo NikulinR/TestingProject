@@ -41,11 +41,6 @@ button:hover{
 	transform: scale(1.1);
 }
 
-button{
-	position: absolute;
-	left: 50%;
-	margin-left: -20px;
-}
 
 .radio:hover{
 	transform: scale(2);
