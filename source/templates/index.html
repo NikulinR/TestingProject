@@ -1,8 +1,7 @@
 <html>
 <head>
 <title>Choose</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/external.css') }}"/></head>
-</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/external.css') }}"/>
 <body>
 <form action="{{ url_for('signout') }}" method = "POST">
 <input type = "submit" value= "Exit">
@@ -36,7 +35,6 @@
 <tr>
 <form>
 <td><input type='text' value='{{item[0]}}' name='testname' readonly></td>
-<td><input type="submit" value="#edit" formmethod="post" formaction="{{ url_for('edit') }}"></td>
 <td><input type="submit" value="-delete" formmethod="post" formaction="{{ url_for('delete') }}"></td>
 </form>
 </tr>
@@ -45,6 +43,10 @@
 
 
 {% endif %}
+
+<form action='{{url_for("userResults")}}'>
+<input type = "submit" value = "Results">
+</form>
 
 </body>
 </html>

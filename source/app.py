@@ -94,6 +94,12 @@ def main():
         tests = DBItem('Test').Show('*')
         return render_template("index.html", user = user[0][0], group = user[0][2].lower(), tests=tests)
 
+@app.route("/userResults")
+def userResults():
+	users = DBItem("Result").Show('*')
+			
+	return render_template("showResults.html", users=users)
+		
 @app.route("/signin", methods=['POST'])
 def signin():
     global isLogined
@@ -261,6 +267,8 @@ def handler():
         anstrue += qtrue/(len(que))    
         ansfalse += 1 - qtrue/(len(que))
         res[qname] = (str(tuple(answers)).lstrip('(').rstrip(')').rstrip(','),correct)
+    if (anstrue+ansfalse)==0:
+        return render_template('results.html', req = res, grade="Sorry, test is not finished yet...")
     grade = round(anstrue/(anstrue+ansfalse)*100, 2)
     DBItem('Result').Create((user[0][0],testname, grade), True)
     return render_template('results.html', req = res, grade=grade)

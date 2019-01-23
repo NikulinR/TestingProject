@@ -1,0 +1,29 @@
+<html>
+<head>
+<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/external.css') }}"/>
+<title>
+Results
+</title>
+</head>
+<body>
+    <h1>Results</h1>
+<table border='2px'>
+<tr>
+<th>User</th>
+<th>Test</th>
+<th>Grade</th>
+</tr>
+{% for user in users %}
+<tr>
+{% for grade in user %}
+<td>{{grade}}</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+<form>
+<input type="submit" value="return" formaction = "/">
+</form>    
+
+</body>
+</html>
