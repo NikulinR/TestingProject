@@ -1,6 +1,7 @@
 <?php
 
-$commandString = 'start /b python.lnk C:\Users\Roman\Documents\NetBeansProjects\pyTesting\source\app.py'; 
+$commandString = 'start /b python.lnk C:\xampp\htdocs\Python\source\app.py';
+echo "Идёт запуск сервера...\n ";
 pclose(popen($commandString, 'r'));
 sleep(2);
 header("Location: http://127.0.0.1:5000/");

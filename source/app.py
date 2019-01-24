@@ -5,7 +5,7 @@ from flask import Flask, render_template,g, request, redirect, url_for
 from flask import request
 
 #PLEASE CHANGE IT
-DATABASE = 'C:/Users/Roman/Documents/Testing_py/source/testing.db'
+DATABASE = 'C:/xampp/htdocs/Python/source/testing.db'
 app = Flask(__name__)
 db = sqlite3.connect(DATABASE, check_same_thread=False)
 cur = db.cursor()
